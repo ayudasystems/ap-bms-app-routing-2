@@ -1,0 +1,134 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Web.Administration" Version="11.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include=".git\config" />
+    <Content Include=".git\description" />
+    <Content Include=".git\HEAD" />
+    <Content Include=".git\hooks\applypatch-msg.sample" />
+    <Content Include=".git\hooks\commit-msg.sample" />
+    <Content Include=".git\hooks\fsmonitor-watchman.sample" />
+    <Content Include=".git\hooks\post-update.sample" />
+    <Content Include=".git\hooks\pre-applypatch.sample" />
+    <Content Include=".git\hooks\pre-commit.sample" />
+    <Content Include=".git\hooks\pre-merge-commit.sample" />
+    <Content Include=".git\hooks\pre-push.sample" />
+    <Content Include=".git\hooks\pre-rebase.sample" />
+    <Content Include=".git\hooks\pre-receive.sample" />
+    <Content Include=".git\hooks\prepare-commit-msg.sample" />
+    <Content Include=".git\hooks\push-to-checkout.sample" />
+    <Content Include=".git\hooks\sendemail-validate.sample" />
+    <Content Include=".git\hooks\update.sample" />
+    <Content Include=".git\index" />
+    <Content Include=".git\info\exclude" />
+    <Content Include=".git\objects\02\1047f3a0ef7a9ed3b1e4d435c1c4403d60bed0" />
+    <Content Include=".git\objects\02\5530a2920650f012085a2bfd377f62964947bd" />
+    <Content Include=".git\objects\07\feb06ab33e0c93ba39b0a3907e2550cbb117c3" />
+    <Content Include=".git\objects\09\796cff580522dc71f9508a0409e30572ac3308" />
+    <Content Include=".git\objects\0c\208ae9181e5e5717e47ec1bd59368aebc6066e" />
+    <Content Include=".git\objects\11\61b03107fd7b4aea0aac64aa5faf676fc63c11" />
+    <Content Include=".git\objects\12\8115952e6894e56e08d401bfd2cbda8f204549" />
+    <Content Include=".git\objects\19\291a9fe42895ea835243b5036f18140dfe87f5" />
+    <Content Include=".git\objects\20\2f4e885f1b792ca000100a1911f7b08ac01a6b" />
+    <Content Include=".git\objects\22\17181c88bdc64e587ffe6e9301b67e1d462aab" />
+    <Content Include=".git\objects\25\376df237caa729c1fbc77a4d4977c640274c70" />
+    <Content Include=".git\objects\29\2642e47900a385cf67dacab0f7623dece6200f" />
+    <Content Include=".git\objects\2b\6c53536a0de4f8e5ecde5c5056631588b31ab8" />
+    <Content Include=".git\objects\2b\90b6845eb0e7296e68e336254c4d1135c22364" />
+    <Content Include=".git\objects\2b\a8732145d1eb5b0ca0ec48c1dc37a0d0b199aa" />
+    <Content Include=".git\objects\30\a6479959c3c0af5fd2e789a46983618e31ad11" />
+    <Content Include=".git\objects\30\d69da228b1668a906b9fa55598386796156e55" />
+    <Content Include=".git\objects\34\d8cc70046fe2006773df48594f21b76ebe3bf9" />
+    <Content Include=".git\objects\36\a28cf0b1af9340200b9a1f3a3cae6d9f356d65" />
+    <Content Include=".git\objects\3a\2c0e7cde03cdc6c77123a6b66a5a4359a4ddbd" />
+    <Content Include=".git\objects\3c\0056c5da5c429d2794ca7da1bc310ca0d2d732" />
+    <Content Include=".git\objects\3d\c06ef3cc4057524bf5d2cd49936dff789cebe8" />
+    <Content Include=".git\objects\40\f8674babb8689cc1f4b4ad620f23a83fe65ea3" />
+    <Content Include=".git\objects\4c\7cd421ea81c8a13468f31b131ac37dbfa46743" />
+    <Content Include=".git\objects\4f\0035198b823907cc7e95f354423e8e3092f353" />
+    <Content Include=".git\objects\51\43698fcdf01a681737ecebc473c5917dd2fc69" />
+    <Content Include=".git\objects\57\f91613ed4411925ad8e4ce4cbb02769cc64393" />
+    <Content Include=".git\objects\5b\7908478a7da196f36e0df343a17aeb7705b2db" />
+    <Content Include=".git\objects\5b\d41b3c3795b69bea4560c233b2f6f57b6879a5" />
+    <Content Include=".git\objects\5d\902050c1d47246cbd53246d9ae62f85eae0b82" />
+    <Content Include=".git\objects\5e\604c7e54d717b29a8b4b0a9c5986fe33a68ef3" />
+    <Content Include=".git\objects\62\159e9624daeda9561e83cec6050a9e0d344ef9" />
+    <Content Include=".git\objects\62\c368e24222f74532e3d5437cf38281f1d9df96" />
+    <Content Include=".git\objects\63\1aa9862187bbfb80318e544fdce91646c34305" />
+    <Content Include=".git\objects\64\af657f5c97b403cfbcdc958aed2580df4e6e5f" />
+    <Content Include=".git\objects\67\6c2802f917219b69432b675a1c8247ff0fbfde" />
+    <Content Include=".git\objects\6a\48a7ebfc5af177bcb669176a2a299b630a1ef7" />
+    <Content Include=".git\objects\6b\3749868796c3edbd5f3c2e030551a745b2cbf4" />
+    <Content Include=".git\objects\71\19db9c5313d3b1505f90b38676a3cb5836ca9c" />
+    <Content Include=".git\objects\74\d2cc5661eaa924e8aaec3faacf4f071341038f" />
+    <Content Include=".git\objects\79\cd1b235e686063f23c45c01d84256d0e5d616e" />
+    <Content Include=".git\objects\7a\6b953713d92b652d42cb4734f2089bc5597d1e" />
+    <Content Include=".git\objects\7b\08163cebc50fb3e777eea4881b68fcebc10590" />
+    <Content Include=".git\objects\7f\0f26b0f35d8dc060f51f27c261902f560a4fcd" />
+    <Content Include=".git\objects\80\a2d953b21a26e0b2851235dafe706b9abd4ab3" />
+    <Content Include=".git\objects\83\a05214de89f70f5db06a7b0c7258a8809dc414" />
+    <Content Include=".git\objects\84\03e6b6e174542ac7615e55682606ade1c9d41e" />
+    <Content Include=".git\objects\84\c260c2a47eb2e12b9c69499df35aabef2b00f1" />
+    <Content Include=".git\objects\84\e549f09a27ed321af7131eaf6bcc8033e4009d" />
+    <Content Include=".git\objects\86\702e63b062b548dc565baf8b6d933b14f508c3" />
+    <Content Include=".git\objects\92\552eaa4f6ceb182db0fcbe1c7e70f3a25a20e2" />
+    <Content Include=".git\objects\93\da1b8e894f9a614f78ec5341573bebb8f225e6" />
+    <Content Include=".git\objects\94\a25f7f4cb416c083d265558da75d457237d671" />
+    <Content Include=".git\objects\99\74973df209455878dc946bb1604fd17b48352a" />
+    <Content Include=".git\objects\9b\f3660234aa560e8c0db1844600f0b5db8a5e86" />
+    <Content Include=".git\objects\9c\bf7fdcbb65b837b39a0476f3a3594441fb6fe8" />
+    <Content Include=".git\objects\9c\ec84385e80609f2851d9cd29c183aa9ea82a6a" />
+    <Content Include=".git\objects\9f\f5820a24514c8c51aea43655b97bad275de94e" />
+    <Content Include=".git\objects\a7\0fd4f7edfcc0234f38b3281eaf969ff781fdb3" />
+    <Content Include=".git\objects\b9\28172e320f0ba19e67483bceb58b281dad66b9" />
+    <Content Include=".git\objects\c0\f7f01f5606605d681c1b64bdd12e84c71ccaef" />
+    <Content Include=".git\objects\c1\998a072c7d9e833a85223cd56274b7f26fdfc2" />
+    <Content Include=".git\objects\c5\2a0b98b5f6971656c7dbdb617488fda455cb48" />
+    <Content Include=".git\objects\c8\057f40fed5f9cfbd53676e5a956bcfd269ce53" />
+    <Content Include=".git\objects\cc\f4148803e571296a5fa4b0e4c1e5b05ad4e2a4" />
+    <Content Include=".git\objects\d0\eb01700eb81a8a68451e61e02c3c5dc3ceaef2" />
+    <Content Include=".git\objects\d3\6c5002cbb46318e2c588579776f9c1cb5cb88a" />
+    <Content Include=".git\objects\d8\58af1896f53718afd3a3824bd667c6c26a36e0" />
+    <Content Include=".git\objects\db\9b430778f708050e80825f8e3370f5287eaf5d" />
+    <Content Include=".git\objects\dd\aed440b73f8fa16c2c7a22d7b5d7adfa1362aa" />
+    <Content Include=".git\objects\e1\3a7bc173b3c3c8b5b757b80eb58e4351c5c7a7" />
+    <Content Include=".git\objects\e6\9de29bb2d1d6434b8b29ae775ad8c2e48c5391" />
+    <Content Include=".git\objects\eb\884570894e5fa8f9c6209932177776aebb6ba1" />
+    <Content Include=".git\objects\ec\58d5eb11748c3ca276eb549db90874725531eb" />
+    <Content Include=".git\objects\ec\d23c9c7a0b0acf0e0f2d1ce12fbe6b1ad90ee2" />
+    <Content Include=".git\objects\ed\6234012d7386dac41909a8a24bcd3292b80e5a" />
+    <Content Include=".git\objects\fa\7a2eb6187779692ef1149bf2fc6b10f12328b3" />
+    <Content Include=".git\objects\fb\c3cd3963804f71eb25b34d714738dc6df52ae9" />
+    <Content Include=".git\objects\fd\77d6ada2c312ea33b0592fbc515d245eb1ac5e" />
+    <Content Include=".idea\.idea.ap-bms-app-routing\.idea\indexLayout.xml" />
+    <Content Include=".idea\.idea.ap-bms-app-routing\.idea\projectSettingsUpdater.xml" />
+    <Content Include=".idea\.idea.ap-bms-app-routing\.idea\vcs.xml" />
+    <Content Include=".idea\.idea.ap-bms-app-routing\.idea\workspace.xml" />
+    <Content Include=".vs\ap-bms-app-routing\DesignTimeBuild\.dtbcache.v2" />
+    <Content Include=".vs\ap-bms-app-routing\v17\.futdcache.v2" />
+    <Content Include=".vs\ap-bms-app-routing\v17\.suo" />
+    <Content Include=".vs\ap-bms-app-routing\v17\DocumentLayout.backup.json" />
+    <Content Include=".vs\ap-bms-app-routing\v17\DocumentLayout.json" />
+    <Content Include=".vs\ProjectEvaluation\ap-bms-app-routing.metadata.v9.bin" />
+    <Content Include=".vs\ProjectEvaluation\ap-bms-app-routing.projects.v9.bin" />
+    <Content Include=".vs\ProjectEvaluation\ap-bms-app-routing.strings.v9.bin" />
+    <Content Include="ap-bms-app-routing.sln.DotSettings.user" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include=".git\objects\info\" />
+    <Folder Include=".git\objects\pack\" />
+    <Folder Include=".git\refs\heads\" />
+    <Folder Include=".git\refs\tags\" />
+  </ItemGroup>
+
+</Project>
