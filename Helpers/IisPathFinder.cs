@@ -8,7 +8,7 @@ namespace Ayuda.AppRouter.Helpers
 {
     public interface IIisPathFinder
     {
-        string? GetPriorityPathForVersion(string version);
+        string? GetPriorityPhysicalPathForVersion(string version);
     }
 
     public class IisPathFinder : IIisPathFinder
@@ -19,14 +19,14 @@ namespace Ayuda.AppRouter.Helpers
         // Environment priority: Cloud > Preview > Labs
         private readonly string[] _environmentPriority = new[] { "Cloud NA", "Preview CA", "Labs NA" };
         
-        //local path for now to test
+        //local path for now to test TODO: REPLACE WITH ENV ??
         public IisPathFinder(ILogger<IisPathFinder> logger, string baseDirectory = @"C:\Broadsign\AyudaApps")
         {
             _logger = logger;
             _baseDirectory = baseDirectory;
         }
 
-        public string? GetPriorityPathForVersion(string shortVersion)
+        public string? GetPriorityPhysicalPathForVersion(string shortVersion)
         {
             _logger.LogInformation($"Looking for priority path for version: {shortVersion}");
 
