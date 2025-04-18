@@ -33,7 +33,7 @@ public class MambaVersionProvider : IVersionProvider
             {
                 string[] strArray = mambaVersionResponse.Version.Split('.');
                 if (strArray.Length >= 3)
-                    return strArray[2]; // Return the third part of the version (e.g., 60843)
+                    return strArray[2]; // Return the third part of the response (e.g., 60843)
             }
         }
         return null;
@@ -41,6 +41,6 @@ public class MambaVersionProvider : IVersionProvider
     
     private class MambaVersionResponse(string version)
     {
-        public string Version { get; set; } = version;
+        public string Version { get; } = version;
     }
 }
