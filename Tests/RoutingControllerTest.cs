@@ -217,8 +217,7 @@ namespace Ayuda.AppRouter.Tests
             Assert.IsType<EmptyResult>(result);
             _mockHttpMessageHandler.Protected().Verify("SendAsync", Times.Once(), ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>());
             Assert.NotNull(capturedRequest); // Ensure request was captured
-
-            // 2. *** Verify the INCORRECT URL was constructed (based on code BEFORE fix) ***
+            
             Assert.Equal(expectedProxiedUrl, capturedRequest.RequestUri.ToString());
 
             

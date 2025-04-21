@@ -32,17 +32,6 @@ namespace Ayuda.AppRouter.Helpers
 
             var availablePaths = new Dictionary<string, string>();
 
-            // check for direct version matches (ex:60843)
-            foreach (var env in _environmentPriority)
-            {
-                var directPath = Path.Combine(_baseDirectory, $"{env}", "BmsInternalWebService", shortVersion);
-                if (Directory.Exists(directPath))
-                {
-                    _logger.LogInformation($"Found direct path for {env}: {directPath}");
-                    availablePaths[$"{env}"] = directPath;
-                }
-            }
-
             // If no direct matches, look for the full version format (7.3023.60843.1 or 7.3023.60843.1_1)
             if (!availablePaths.Any())
             {
