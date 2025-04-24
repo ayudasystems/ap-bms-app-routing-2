@@ -1,5 +1,4 @@
 using Ayuda.AppRouter;
-using Ayuda.AppRouter.Helpers;
 using Ayuda.AppRouter.Interfaces;
 using Ayuda.AppRouter.Mamba;
 
@@ -10,7 +9,6 @@ builder.Services.Configure<RouterOptions>( builder.Configuration.GetSection("Rou
 builder.Services.AddTransient<IStartupFilter, PathBaseStartupFilter>();
 builder.Services.Configure<MambaOptions>(builder.Configuration.GetSection("Mamba"));
 builder.Services.AddTransient<IVersionProvider, MambaVersionProvider>();
-builder.Services.AddSingleton<IIisPathFinder, IisPathFinder>();
 WebApplication endpoints = builder.Build();
 endpoints.MapControllers();
 endpoints.Run();

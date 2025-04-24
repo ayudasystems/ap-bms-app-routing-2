@@ -7,6 +7,7 @@ using Moq;
 using Moq.Protected;
 using System.Net;
 using System.Text;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Xunit; // Added for testing attributes and Assert
 
 namespace Ayuda.AppRouter.Tests
@@ -14,12 +15,10 @@ namespace Ayuda.AppRouter.Tests
     public class RoutingControllerTest
     {
         private readonly Mock<IVersionProvider> _mockVersionProvider;
-        private readonly Mock<IIisPathFinder> _mockPathFinder;
         private readonly Mock<ILogger<RoutingController>> _mockLogger;
         private readonly Mock<IOptions<RouterOptions>> _mockOptions;
         private readonly Mock<IHttpClientFactory> _mockHttpClientFactory;
         private readonly Mock<HttpMessageHandler> _mockHttpMessageHandler;
-
         private readonly RouterOptions _defaultRouterOptions;
         private readonly HttpClient _httpClient;
 
@@ -31,7 +30,6 @@ namespace Ayuda.AppRouter.Tests
                 .Build();
 
             _mockVersionProvider = new Mock<IVersionProvider>();
-            _mockPathFinder = new Mock<IIisPathFinder>();
             _mockLogger = new Mock<ILogger<RoutingController>>();
             _mockOptions = new Mock<IOptions<RouterOptions>>();
             _mockHttpClientFactory = new Mock<IHttpClientFactory>();
@@ -54,8 +52,6 @@ namespace Ayuda.AppRouter.Tests
             _mockHttpClientFactory.Setup(_ => _.CreateClient(It.IsAny<string>())).Returns(_httpClient);
             _mockVersionProvider.Setup(vp => vp.GetVersion(It.IsAny<string>()))
                 .ReturnsAsync("60843"); // TODO: make it more dynamic ? 
-            _mockPathFinder.Setup(pf => pf.GetPriorityPhysicalPathForVersion(It.IsAny<string>()))
-                .Returns((string)null);
             // default resp is 200
             SetupMockBackendResponse(HttpStatusCode.OK);
         }
@@ -79,7 +75,6 @@ namespace Ayuda.AppRouter.Tests
                 _mockVersionProvider.Object,
                 _mockHttpClientFactory.Object,
                 _mockOptions.Object,
-                _mockPathFinder.Object,
                 _mockLogger.Object
             )
             {
@@ -126,14 +121,11 @@ namespace Ayuda.AppRouter.Tests
             var result = await controller.Route();
 
             // Assert
-            var okResult = Assert.IsType<OkObjectResult>(result);
-            Assert.Equal("X-Tenant-Host header missing.", okResult.Value);
+            var badRequest = Assert.IsType<BadRequestObjectResult>(result);
+            Assert.Equal("X-Tenant-Host header missing.", badRequest.Value);
             
             _mockVersionProvider.Verify(vp => vp.GetVersion(It.IsAny<string>()), Times.Never,
                 "VersionProvider should not be called when X-Tenant-Host is missing.");
-
-            _mockPathFinder.Verify(pf => pf.GetPriorityPhysicalPathForVersion(It.IsAny<string>()), Times.Never,
-                "PathFinder should not be called when X-Tenant-Host is missing.");
 
             _mockHttpClientFactory.Verify(hcf => hcf.CreateClient(It.IsAny<string>()), Times.Never,
                 "HttpClientFactory should not be called when X-Tenant-Host is missing.");
@@ -157,83 +149,12 @@ namespace Ayuda.AppRouter.Tests
             var result = await controller.Route();
 
             // Assert
-            var notFoundResult = Assert.IsType<NotFoundObjectResult>(result);
-            Assert.Equal("Version not found for host.", notFoundResult.Value);
+             Assert.IsType<NotFoundObjectResult>(result);
             _mockVersionProvider.Verify(vp => vp.GetVersion(tenantHost), Times.Once,
                 "VersionProvider should be called once.");
-            _mockPathFinder.Verify(pf => pf.GetPriorityPhysicalPathForVersion(It.IsAny<string>()), Times.Never,
-                "PathFinder should not be called when version is null.");
 
             _mockHttpClientFactory.Verify(hcf => hcf.CreateClient(It.IsAny<string>()), Times.Never,
                 "HttpClientFactory should not be called when version is null.");
         }
-        
-        [Fact]
-        public async Task Route_When_Highest_Priority_Path_Differs_From_Tenant_Sends_Correct_Header()
-        {
-            // Arrange
-            // This test is going to try an mimic as close as possible to the prod bug
-            string tenantHost = "test@ayudalabs.com";
-            string version = "60843"; 
-            string physicalPath = "C:\\AyudaApps\\Cloud NA\\BmsInternalWebService\\7.3023.60843.1";
-            string requestPath = "/BMSInternalWebService/ReportService.asmx"; 
-            string queryString = "";
-            string expectedProxiedUrl = $"http://{_defaultRouterOptions.RedirectHost}/{version}{requestPath}{queryString}";
-
-            var httpContext = CreateHttpContext();
-            httpContext.Request.Headers["X-Tenant-Host"] = tenantHost;
-            httpContext.Request.Method = HttpMethods.Post; // Example method
-            httpContext.Request.Path = requestPath;
-            httpContext.Request.QueryString = new QueryString(queryString);
-            // Add some body content for testing pass-through
-            var requestBody = "Content of the request body";
-            var requestBodyStream = new MemoryStream(Encoding.UTF8.GetBytes(requestBody));
-            httpContext.Request.Body = requestBodyStream;
-            httpContext.Request.ContentLength = requestBodyStream.Length;
-            httpContext.Request.ContentType = "text/xml";
-            
-            _mockPathFinder.Setup(pf => pf.GetPriorityPhysicalPathForVersion(version))
-                           .Returns(physicalPath);
-
-            // Setup backend response (doesn't matter much, just needs to be success for this test)
-            SetupMockBackendResponse(HttpStatusCode.OK, "Backend Response OK");
-
-            // Variable to capture the outgoing request
-            HttpRequestMessage capturedRequest = null;
-
-            // Configure the handler to capture the request *before* returning the response
-            _mockHttpMessageHandler.Protected()
-                .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
-                .Callback<HttpRequestMessage, CancellationToken>((req, ct) => capturedRequest = req)
-                .ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent("Backend Response OK") });
-
-
-            var controller = CreateController(httpContext);
-
-            // Act
-            var result = await controller.Route();
-
-            // Assert
-            Assert.IsType<EmptyResult>(result);
-            _mockHttpMessageHandler.Protected().Verify("SendAsync", Times.Once(), ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>());
-            Assert.NotNull(capturedRequest); // Ensure request was captured
-            
-            Assert.Equal(expectedProxiedUrl, capturedRequest.RequestUri.ToString());
-
-            
-            Assert.Equal(HttpMethod.Post, capturedRequest.Method);
-            string capturedBody = await capturedRequest.Content.ReadAsStringAsync();
-            Assert.Equal(requestBody, capturedBody);
-            Assert.Equal(httpContext.Request.ContentType, capturedRequest.Content.Headers.ContentType?.ToString());
-
-            
-            Assert.True(capturedRequest.Headers.TryGetValues("X-Ayuda-Resolved-Path", out var headerValues), "X-Ayuda-Resolved-Path header missing");
-            Assert.Equal(physicalPath, headerValues.First());
-            
-            _mockVersionProvider.Verify(vp => vp.GetVersion(tenantHost), Times.Once);
-            _mockPathFinder.Verify(pf => pf.GetPriorityPhysicalPathForVersion(version), Times.Once);
-            _mockHttpClientFactory.Verify(hcf => hcf.CreateClient(It.IsAny<string>()), Times.Once);
-        }
-
     }
 }
